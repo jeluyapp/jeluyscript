@@ -16,6 +16,7 @@ class Symbols {
   final Map<String, int> symbols = HashMap();
 
   int nextSym = 0;
+  int currentId = 0;
 
   String name(Symbol sym) {
     return sym._1;
@@ -33,11 +34,9 @@ class Symbols {
     return Symbol(sym, sym_, symbols.putIfAbsent(sym, () => nextSym += 1));
   }
 
-  int currentId = 0;
-
   Symbol generateName(String sym) {
-    String sym_  =  "${sym}_gen_${currentId}";
-    String sym__ =  "${sym}g_gen_${currentId}";
+    String sym_ = "${sym}_gen_${currentId}";
+    String sym__ = "${sym}g_gen_${currentId}";
 
     currentId += 1;
 
@@ -48,7 +47,13 @@ class Symbols {
     return generateName('');
   }
 
-  bool equal(Symbol sym1, Symbol sym2) {
-    return sym1._3 == sym2._3;
+  int compare(Symbol sym1, Symbol sym2) {
+    if (sym1._3 < sym2._3) {
+      return -1;
+    } else if (sym1._3 > sym2._3) {
+      return 1;
+    } else {
+      return 0;
+    }
   }
 }
